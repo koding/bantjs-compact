@@ -1,14 +1,20 @@
 var toposort = require('toposort');
 
 module.exports = function (tree) {
-  return sort(tree.map(traverse.bind(null))).map(function (name) {
+  var tree = sort(tree.map(traverse.bind(null))).map(function (name) {
     return tree[find(tree, name, true)];
-  }).reduce(function (a, b, i) {
+  });
+
+  if (tree.length == 1) return tree;
+
+  tree = tree.reduce(function (a, b, i) {
     var arr = [].concat(a);
     if (distance(arr, b) !== 1)
       return arr.concat(b);
     return arr;
   });
+
+  return tree;
 
   function traverse (branch) {
     branch.locals = [].concat(branch.locals)
