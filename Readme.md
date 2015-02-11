@@ -1,0 +1,5 @@
+# bant-compact
+
+# license
+
+mit
